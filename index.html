@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>discord-xmas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="title">
+        <h1>discord-xmas</h1>
+    </div>
+
+    <div class="up">
+
+        <div class="fileName">
+          <a>NO FILE SELECTED</a>
+        </div>
+
+        <div class="file-search-button">
+          <label for="file-upload" class="custom-file-upload">
+            <i class="fa fa-search"></i> BROWSE FOR A FILE
+          </label>
+          <input id="file-upload" type="file"/>
+        </div>
+    </div>
+
+    <div id="imageres">
+        <img id="imaget" title="PFP" src="/images/dhsnaidneyao.png">
+        <img id="imgaet" title="PFP" src="/images/dex6.png">
+    </div>
+
+    <canvas style="display: none;" id="myCanvas"></canvas>
+
+    <script>
+        const fileName = document.querySelector(".fileName");
+        
+        let newImgSrc = ``;
+        const fileInput = document.querySelector("input[type=file]");
+        fileInput.addEventListener("change", function() {
+            if (this.files && this.files[0]) {
+                var image = document.getElementById("imaget")
+                image.src = URL.createObjectURL(this.files[0]);
+                newImgSrc = URL.createObjectURL(this.files[0]);
+                fileName.innerHTML = this.files[0].name;
+                document.getElementById("imgaet").style.display = 'block';
+                setTimeout(function(){renderImage()}, 1000)
+            }
+        });
+
+        function renderImage() {
+            var c=document.getElementById("myCanvas");
+            var ctx=c.getContext("2d");
+            var imageObj1 = new Image();
+            var imageObj2 = new Image();
+            imageObj1.src = newImgSrc
+            imageObj1.onload = function() {
+            ctx.drawImage(imageObj1, 1, 10, 188, 90);
+            imageObj2.src = "/images/dex6.png";
+            imageObj2.onload = function() {
+                ctx.drawImage(imageObj2, 1, 10, 188, 90);
+                var img = c.toDataURL("image/png");
+                document.body.innerHTML += '<img src="' + img + '" width="300" height="300"/>';
+            }
+            };
+        }
+    </script>
+</body>
+</html>
